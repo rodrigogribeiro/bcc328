@@ -1,0 +1,131 @@
+cabal-version:      3.0
+name:               bcc328
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            BSD-2-Clause
+license-file:       LICENSE
+author:             Rodrigo Ribeiro
+maintainer:         rodrigogribeiro@gmail.com
+-- copyright:
+category:           Language
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+    exposed-modules:
+        Exp.Backend.C.ExpCCodegen
+        Exp.Backend.SVM.ExpSVMCodegen 
+        Exp.Frontend.Lexer.Lexer 
+        Exp.Frontend.Lexer.ExpHandBuiltLexer
+        Exp.Frontend.Lexer.Token
+        Exp.Frontend.Parser.Parser
+        Exp.Frontend.Parser.ExpHandWrittenParser
+        Exp.Interpreter.ExpInterpreter
+        Exp.Syntax.Syntax 
+        Imp.Syntax.Syntax
+        Imp.Backend.C.ExpCCodegen
+        Imp.Backend.C.StatementCCodegen
+        Imp.Backend.SVM.ExpCodegen
+        Imp.Backend.SVM.StatementCodegen
+        Imp.Frontend.Lexer.Lexer
+        Imp.Frontend.Parser.Parser
+        Imp.Frontend.Semantics.Basics
+        Imp.Frontend.Semantics.ExpTypeChecker
+        Imp.Frontend.Semantics.StatementTypeChecker
+        Imp.Interpreter.ImpInterpreter
+        Lexer.Automata.Basic
+        Lexer.Automata.DFA
+        Lexer.Automata.NFA
+        Lexer.Automata.NFALambda
+        Lexer.Automata.Minimization
+        Lexer.Automata.Rename
+        Lexer.Regex.Derivative.Antimirov
+        Lexer.Regex.Derivative.Brzozowski
+        Lexer.Regex.Derivative.ToDFA
+        Lexer.Regex.Syntax
+        Lexer.Regex.ToDFA
+        Parser.PEG.ParsingExp
+        Parser.Recursive.SimpleCombinators
+        Parser.Recursive.SimpleExpr
+        SVM.Instr
+        SVM.Interp
+        SVM.StackLexer
+        SVM.StackParser
+        Hlist  
+
+    -- other-modules:
+    -- other-extensions:
+    build-depends:    base ^>=4.17.2.1,
+                      containers,
+                      mtl,
+                      array,
+                      megaparsec,
+                      parser-combinators,
+                      filepath,
+                      pretty
+    hs-source-dirs:   src
+    default-language: Haskell2010
+
+executable imp
+    import:           warnings
+    main-is:          Imp.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:
+        base ^>=4.17.2.1,
+        pretty, 
+        filepath,
+        bcc328
+
+    hs-source-dirs:   src/Imp
+    default-language: Haskell2010
+
+executable svm
+    import:           warnings
+    main-is:          VMMain.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:
+        base ^>=4.17.2.1,
+        pretty, 
+        filepath,
+        bcc328
+
+    hs-source-dirs:   src/SVM
+    default-language: Haskell2010
+
+executable exp
+    import:           warnings
+    main-is:          Exp.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:
+        base ^>=4.17.2.1,
+        pretty, 
+        filepath,
+        bcc328
+
+    hs-source-dirs:   src/Exp
+    default-language: Haskell2010
+
+
+
+test-suite bcc328-test
+    import:           warnings
+    default-language: Haskell2010
+    -- other-modules:
+    -- other-extensions:
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    build-depends:
+        base ^>=4.17.2.1,
+        tasty,
+        tasty-hunit,
+        bcc328

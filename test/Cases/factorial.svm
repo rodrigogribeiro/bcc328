@@ -1,0 +1,32 @@
+pushi 0
+pushi 0
+store
+pushi 0
+in
+store
+pushi 1
+pushi 1
+store
+pushi 0
+pushi 0
+load
+ilt
+jz 15
+pushi 1
+pushi 0
+load
+pushi 1
+load
+mul
+store
+pushi 0
+pushi 0
+load
+pushi 1
+sub
+store
+jmp -18
+pushi 1
+load
+out
+halt

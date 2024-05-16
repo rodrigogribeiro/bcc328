@@ -1,0 +1,10 @@
+{
+  int n := 0;
+  read n;
+  int result := 1;
+  while 0 < n {
+    result := result * n ;
+    n := n - 1;
+  }
+  print result;
+}
