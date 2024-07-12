@@ -54,4 +54,5 @@ dfaDeltaStar _ s [] = s
 dfaDeltaStar m s (c : cs) = dfaDeltaStar m (dfaDelta m s c) cs
 
 dfaAccept :: (State a, Symbol b) => DFA a b -> [b] -> Bool
-dfaAccept m s = dfaDeltaStar m (dfaStart m) s `elem` (dfaFinals m)
+dfaAccept m s
+  = dfaDeltaStar m (dfaStart m) s `elem` (dfaFinals m)
