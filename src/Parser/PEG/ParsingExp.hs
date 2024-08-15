@@ -183,7 +183,7 @@ parens = (f <$> lparen <*> parens <*> rparen <*> parens) </> lambda ""
 expr :: PExp String String
 expr = f <$> term <*> star ((++) <$> plus <*> expr) 
   where 
-     f s1 ss = s1 ++ concat ss 
+     f s1 ss = s1 ++ concat ss
      plus = (wrap <$> symbol '+') </> (wrap <$> symbol '-')
 
 wrap :: a -> [a]
@@ -210,4 +210,4 @@ var :: PExp String String
 var = f <$> letter <*> star (letter </> digit)
       where 
         letter = satisfy isLetter
-        f l s = l : s 
+        f l s = l : s

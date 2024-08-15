@@ -127,7 +127,8 @@ pi32 _ y _  =  y
 -- Applications of EBNF combinators
 
 natural  :: Parser Char Int
-natural  =  foldl (\a b -> a*10 + b) 0 <$> many1 digit
+natural  
+  =  foldl (\ a b -> a * 10 + b) 0 <$> many1 digit
 
 integer  ::  Parser Char Int
 integer  =  (const negate <$> (symbol '-')) `option` id  <*>  natural 

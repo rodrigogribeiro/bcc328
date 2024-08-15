@@ -105,4 +105,5 @@ subsetStates :: (State a, Symbol b) => NFA a b -> [[a]]
 subsetStates m
   = fixpoint step [nfaStart m]
     where
-      step es = nub $ es ++ [nfaDelta m e c | es1 <- es, e <- es1, c <- nfaSigma m]
+      step es = nub $ es ++ [nfaDelta m e c | es1 <- es, e <- es1,
+                                              c <- nfaSigma m]
