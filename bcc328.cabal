@@ -50,6 +50,12 @@ library
         Lexer.Regex.Derivative.ToDFA
         Lexer.Regex.Syntax
         Lexer.Regex.ToDFA
+        Parser.Common.First
+        Parser.Common.Follow
+        Parser.Common.Grammar
+        Parser.LL.Expr 
+        Parser.LL.Predictive
+        Parser.LL.Table
         Parser.PEG.ParsingExp
         Parser.Recursive.SimpleCombinators
         Parser.Recursive.SimpleExpr
