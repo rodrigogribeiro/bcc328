@@ -19,6 +19,7 @@ common warnings
 library
     import:           warnings
     exposed-modules:
+        -- modules for the expression compiler
         Exp.Backend.C.ExpCCodegen
         Exp.Backend.SVM.ExpSVMCodegen 
         Exp.Frontend.Lexer.Lexer 
@@ -28,6 +29,7 @@ library
         Exp.Frontend.Parser.ExpHandWrittenParser
         Exp.Interpreter.ExpInterpreter
         Exp.Syntax.Syntax 
+        -- modules for the IMP compiler 
         Imp.Syntax.Syntax
         Imp.Backend.C.ExpCCodegen
         Imp.Backend.C.StatementCCodegen
@@ -39,6 +41,7 @@ library
         Imp.Frontend.Semantics.ExpTypeChecker
         Imp.Frontend.Semantics.StatementTypeChecker
         Imp.Interpreter.ImpInterpreter
+        -- modules for the lexical analysis algorithms 
         Lexer.Automata.Basic
         Lexer.Automata.DFA
         Lexer.Automata.NFA
@@ -50,15 +53,18 @@ library
         Lexer.Regex.Derivative.ToDFA
         Lexer.Regex.Syntax
         Lexer.Regex.ToDFA
+        -- modules for parsing algorithms 
         Parser.Common.First
         Parser.Common.Follow
         Parser.Common.Grammar
-        Parser.LL.Expr 
+        Parser.Examples.Expr
+        Parser.Examples.IfElse
         Parser.LL.Predictive
         Parser.LL.Table
         Parser.PEG.ParsingExp
         Parser.Recursive.SimpleCombinators
         Parser.Recursive.SimpleExpr
+        -- modules for the virtual machine interpreter
         SVM.Instr
         SVM.Interp
         SVM.StackLexer

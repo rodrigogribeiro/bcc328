@@ -42,7 +42,8 @@ data Production
     } deriving Eq
 
 instance Show Production where
-  show (Prod l rs) = show l ++ " -> " ++ concatMap show rs
+  show (Prod l rs) 
+    = show l ++ " -> " ++ (unwords $ map show rs)
 
 (+->) :: Nonterminal -> [Symbol] -> Production
 (+->) = Prod

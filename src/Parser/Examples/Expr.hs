@@ -1,4 +1,4 @@
-module Parser.LL.Expr (exprGrammar, exprLex) where
+module Parser.Examples.Expr (exprGrammar, exprLex) where
 
 import Prelude hiding (lex)
 import Parser.Common.Grammar
