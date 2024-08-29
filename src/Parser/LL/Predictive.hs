@@ -8,7 +8,7 @@ import qualified Data.Map as Map
 import Data.Maybe
 
 import Parser.Common.Grammar
-import Parser.LL.Table
+import Parser.LL.MkLL1Table
 
 type Lexer = String -> Maybe (String, String)
 

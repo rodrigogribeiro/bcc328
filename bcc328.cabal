@@ -21,14 +21,16 @@ library
     exposed-modules:
         -- modules for the expression compiler
         Exp.Backend.C.ExpCCodegen
-        Exp.Backend.SVM.ExpSVMCodegen 
-        Exp.Frontend.Lexer.Lexer 
+        Exp.Backend.SVM.ExpSVMCodegen
+        Exp.Frontend.Lexer.Lexer
         Exp.Frontend.Lexer.ExpHandBuiltLexer
         Exp.Frontend.Lexer.Token
         Exp.Frontend.Parser.Parser
         Exp.Frontend.Parser.ExpHandWrittenParser
         Exp.Interpreter.ExpInterpreter
-        Exp.Syntax.Syntax 
+        Exp.Syntax.Syntax
+        -- modules for the If language 
+        IfExp.Syntax
         -- modules for the IMP compiler 
         Imp.Syntax.Syntax
         Imp.Backend.C.ExpCCodegen
@@ -53,14 +55,17 @@ library
         Lexer.Regex.Derivative.ToDFA
         Lexer.Regex.Syntax
         Lexer.Regex.ToDFA
-        -- modules for parsing algorithms 
+        -- modules for parsing algorithms
+        Parser.Common.ExtendGrammar
         Parser.Common.First
         Parser.Common.Follow
         Parser.Common.Grammar
+        Parser.Common.Table
         Parser.Examples.Expr
         Parser.Examples.IfElse
         Parser.LL.Predictive
-        Parser.LL.Table
+        Parser.LL.MkLL1Table
+        Parser.LR.LR0.MkLR0Table
         Parser.PEG.ParsingExp
         Parser.Recursive.SimpleCombinators
         Parser.Recursive.SimpleExpr

@@ -1,15 +1,17 @@
-module Parser.LL.Table (Table, buildTable, printTable,toTableString) where
+module Parser.LL.MkLL1Table ( Table
+                            , buildTable
+                            , printTable
+                            , toTableString
+                            ) where
 
 import Data.List
-import Data.Map (Map)
 import qualified Data.Map as Map
 
 import Parser.Common.First
 import Parser.Common.Follow
 import Parser.Common.Grammar
+import Parser.Common.Table
 
-
-type Table = Map (Nonterminal, Terminal) [Production]
 
 buildTable :: Grammar -> Table
 buildTable g = foldr step Map.empty (productions g)
@@ -31,19 +33,6 @@ buildTable g = foldr step Map.empty (productions g)
                         Dollar `elem` followP
                      then insertTable p Dollar tbl2
                      else tbl2
-
-toTableString :: Table -> String
-toTableString tbl
-  = concatMap format (Map.toList tbl)
-    where
-      format ((nt, t), p) = concat [ "M["
-                                   , show nt
-                                   , ", "
-                                   , show t
-                                   , "] = "
-                                   , show p
-                                   , "\n"
-                                   ]
 
 printTable :: Grammar -> IO ()
 printTable g

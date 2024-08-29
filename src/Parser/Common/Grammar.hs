@@ -13,12 +13,14 @@ data Terminal
   = T String
   | Dollar
   | Lambda
+  | Dot 
   deriving (Eq, Ord)
 
 instance Show Terminal where
   show (T s) = s
   show Dollar = "$"
   show Lambda = "lambda"
+  show Dot = "."
 
 data Nonterminal
   = NT String
