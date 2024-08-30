@@ -1,14 +1,6 @@
-module IfExp.Syntax where 
+module IfExp.Interpreter.Interpreter where 
 
-data IExp 
-  = IZero 
-  | ISucc IExp 
-  | IIsZero IExp 
-  | IPred IExp 
-  | ITrue 
-  | IFalse 
-  | IIf IExp IExp IExp 
-  deriving (Eq, Show)
+import IfExp.Syntax.Syntax 
 
 interp :: IExp -> Result Value 
 interp IZero = pure (Right NZero)

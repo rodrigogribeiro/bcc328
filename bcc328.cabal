@@ -29,8 +29,12 @@ library
         Exp.Frontend.Parser.ExpHandWrittenParser
         Exp.Interpreter.ExpInterpreter
         Exp.Syntax.Syntax
-        -- modules for the If language 
-        IfExp.Syntax
+        -- modules for the If language
+        IfExp.Frontend.Lexer.Lexer
+        IfExp.Frontend.Lexer.Token
+        IfExp.Frontend.Parser.Parser
+        IfExp.Interpreter.Interpreter
+        IfExp.Syntax.Syntax
         -- modules for the IMP compiler 
         Imp.Syntax.Syntax
         Imp.Backend.C.ExpCCodegen
