@@ -1,6 +1,8 @@
 module IfExp.Interpreter.Interpreter where 
 
 import IfExp.Syntax.Syntax 
+import Prelude hiding ((<>))
+import Text.PrettyPrint.HughesPJ
 
 interp :: IExp -> Result Value 
 interp IZero = pure (Right NZero)
@@ -46,6 +48,21 @@ data NValue
   = NZero 
   | NSucc NValue 
   deriving (Eq, Show)
+
+pretty :: Value -> String 
+pretty = render . pretty' 
+
+pretty' :: Value -> Doc 
+pretty' (Left b) = prettyB b 
+pretty' (Right n) = prettyN n 
+
+prettyB :: BValue -> Doc 
+prettyB BTrue = text "true"
+prettyB BFalse = text "false"
+
+prettyN :: NValue -> Doc 
+prettyN NZero = text "zero"
+prettyN (NSucc nv) = text "succ" <> parens (prettyN nv)
 
 data Result a 
   = Ok a 
