@@ -1,5 +1,6 @@
 import IfExp.Interpreter.Interpreter
 import IfExp.Frontend.Parser.Parser 
+import IfExp.Frontend.Semantics.IfExpTypeChecker
 
 import System.Environment
 
@@ -17,9 +18,12 @@ runWithOptions opts
   = do 
       content <- readFile (file opts)
       let tree = ifExpParser content
-      case interp tree of 
-        TypeError -> putStrLn "The program has a type error"
-        Ok v -> print v 
+      case typeCheck tree of 
+        Checked _ -> 
+          case interp tree of 
+            TypeError -> putStrLn "The program has a type error"
+            Ok v -> print v 
+        TypeMismatch ex fd e -> putStrLn $ typeError ex fd e
 
 -- data type for command line options
 

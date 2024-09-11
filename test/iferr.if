@@ -1,0 +1,1 @@
+if iszero zero then true else zero 

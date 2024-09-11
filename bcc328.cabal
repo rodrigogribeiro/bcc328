@@ -33,6 +33,7 @@ library
         IfExp.Frontend.Lexer.Lexer
         IfExp.Frontend.Lexer.Token
         IfExp.Frontend.Parser.Parser
+        IfExp.Frontend.Semantics.IfExpTypeChecker
         IfExp.Interpreter.Interpreter
         IfExp.Syntax.Syntax
         -- modules for the IMP compiler 
