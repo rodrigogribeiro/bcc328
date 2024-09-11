@@ -3,7 +3,7 @@ import IfExp.Frontend.Parser.Parser
 
 import System.Environment
 
--- main function for Imp 
+-- main function for Ifexp 
 
 main :: IO ()
 main = do 
