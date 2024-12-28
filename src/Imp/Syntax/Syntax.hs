@@ -2,6 +2,8 @@
 
 module Imp.Syntax.Syntax where
 
+import Data.List
+
 -- definition of expressions
 
 newtype Var = Var { unVar :: String } deriving (Eq, Ord, Show)
@@ -47,3 +49,18 @@ data Stmt
   | SRead Var
   | While Exp Block
   deriving (Eq, Ord, Show)
+
+class Vars a where 
+  vars :: a -> [Var]
+
+instance Vars Stmt where 
+  vars (Def _ v _) = [v]
+  vars (If _ bt be) 
+    = vars bt ++ vars be
+  vars (While _ bw)
+    = vars bw 
+  vars _ = []
+
+instance Vars Block where 
+  vars (Block blk) 
+    = nub $ concatMap vars blk

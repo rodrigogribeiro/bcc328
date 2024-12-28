@@ -6,7 +6,10 @@ import SVM.Instr
 
 compileProgram :: Program -> IO Code
 compileProgram (Program blk)
-  =  (++ [HALT]) <$> runCompileM (compileBlock blk)
+  = runCompileM $ do 
+      code <- compileBlock blk
+      bfree <- freeVars (vars blk)
+      pure (code ++ bfree ++ [HALT])
 
 compileStatement :: Stmt -> CompileM Code
 compileStatement Skip = return []
@@ -34,10 +37,15 @@ compileStatement (If e bthen belse)
       cthen <- compileBlock bthen
       celse <- compileBlock belse
       let thensize = length cthen
+          thenvars = vars bthen 
           elsesize = length celse
+          elsevars = vars belse
+      fthen <- freeVars thenvars
+      felse <- freeVars elsevars
       return $ concat [ ce, [JZ $ thensize + 1]
-                      , cthen, [JMP $ elsesize + 1]
-                      , celse]
+                      , cthen
+                      , fthen, [JMP $ elsesize + 1]
+                      , celse, felse ]
 compileStatement (While e blk)
   = do
       ce <- compileExpr e
@@ -45,9 +53,21 @@ compileStatement (While e blk)
       let blksize = length cblock
           expsize = length ce
           back = - (blksize + expsize + 1)
+      bfree <- freeVars (vars blk)
       return $ concat [ ce, [JZ (blksize + 2)], cblock
                       , [JMP back]
+                      , bfree 
                       ]
+
+freeVars :: [Var] -> CompileM Code 
+freeVars 
+  = mapM freeVar 
+
+freeVar :: Var -> CompileM Instr 
+freeVar v 
+  = do 
+      addr <- lookupVar v 
+      pure (FREE addr)
 
 compileInit :: Maybe Exp -> CompileM Code
 compileInit Nothing = return [PUSHI 0]
