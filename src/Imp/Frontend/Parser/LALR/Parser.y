@@ -1,5 +1,5 @@
 {
-module Imp.Frontend.Parser.Parser (impParser) where
+module Imp.Frontend.Parser.LALR.Parser (impParser) where
 
 import Imp.Frontend.Lexer.Lexer
 import Imp.Syntax.Syntax

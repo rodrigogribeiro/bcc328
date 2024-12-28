@@ -4,9 +4,9 @@ import Mathlib.Tactic.Basic
 import Imp.Syntax
 import Imp.Interpreter 
 
--- semantics of statements 
+-- semantics of statements (big step) 
 
-inductive Eval : Env → Stmt → Env → Prop
+inductive Eval : Env → Stmt → Env → Prop where 
 | ESkip : ∀ env, Eval env Stmt.Skip env
 | EAssign : ∀ env s e v,
             evalExp e env = v →
@@ -35,3 +35,4 @@ inductive Eval : Env → Stmt → Env → Prop
 
 macro "<*" env:term "|" s: term "*>" "==>" env1:term : term =>
   `(Eval $env $s $env1)
+

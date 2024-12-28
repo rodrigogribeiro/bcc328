@@ -95,7 +95,8 @@ subset m
 
 subsetTransitions :: (State a, Symbol b) => NFA a b -> [(([a], b), [a])]
 subsetTransitions m
-  = map (\ d@(es', c) -> (d, bigUnion $ map (\ e -> nfaDelta m e c) es')) dom
+  = map (\ d@(es', c) -> (d, bigUnion $ 
+        map (\ e -> nfaDelta m e c) es')) dom
   where
     es = subsetStates m
     sig = nfaSigma m

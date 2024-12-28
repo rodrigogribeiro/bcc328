@@ -9,7 +9,16 @@ import Imp.Semantics
 
 -- assertions 
 
-abbrev Assertion := Env → Prop 
+abbrev Assertion := Env → Prop
+
+def assert_implies (P Q : Assertion) : Assertion := 
+  λ st => P st → Q st 
+
+def assert_and (P Q : Assertion) : Assertion := 
+  λ st => P st ∧ Q st 
+
+infixr:90 " .&. " => assert_and 
+infixr:80 " +-> " => assert_implies
 
 -- Hoare logic 
 
@@ -53,30 +62,34 @@ theorem Seq_rule (P Q R : Assertion) s1 s2
     intros H1 H2 env env' HP Hs 
     rcases Hs ; aesop
 
-macro P:term "∧ True(" b:term ")" : term => 
-  `(λ st => $P st ∧ evalExp $b st > 0)
+macro "True(" b:term ")" : term => 
+  `(λ st => evalExp $b st > 0)
 
-macro P:term "∧ False(" b:term ")" : term => 
-  `(λ st => $P st ∧ evalExp $b st = 0)
+macro "False(" b:term ")" : term => 
+  `(λ st => evalExp $b st = 0)
 
 theorem If_rule (P Q : Assertion) b s1 s2 
-  : {* P ∧ True(b) *} (s1) {* Q *} → 
-    {* P ∧ False(b) *} (s2) {* Q *} → 
+  : {* P .&. True(b) *} (s1) {* Q *} → 
+    {* P .&. False(b) *} (s2) {* Q *} → 
     {* P *} (.If b s1 s2) {* Q *} := by 
     intros H1 H2 
     intros env env' HPenv HEval 
     rcases HEval 
     · 
       rename_i v Hb Henv' 
-      apply H1 <;> aesop
+      apply H1 <;> try assumption 
+      simp [assert_and] 
+      constructor <;> aesop
     · 
       rename_i H3 H4 
-      apply H2 <;> aesop
+      apply H2 <;> try assumption 
+      simp [assert_and]
+      constructor <;> aesop
 
 
 theorem While_rule (P : Assertion) b s 
-  : {* P ∧ True(b) *} (s) {* P *} → 
-    {* P *} (.While b s) {* P ∧ False(b) *} := by 
+  : {* P .&. True(b) *} (s) {* P *} → 
+    {* P *} (.While b s) {* P .&. False(b) *} := by 
     intros H1 env env' Hp HEval
     have H2 : ∃ x, x = Stmt.While b s := by 
       exists (Stmt.While b s)
@@ -85,7 +98,8 @@ theorem While_rule (P : Assertion) b s
     induction' HEval <;> try rcases Heq 
     · 
       rename_i env' H1
-      aesop 
+      simp [assert_and]
+      constructor <;> aesop 
     · 
       rename_i env0 env1 env2 v Hexp Heval _IH2 _Heval1 IH1
       apply IH1 
@@ -94,12 +108,24 @@ theorem While_rule (P : Assertion) b s
         constructor 
         · 
           exact Hp
-        · 
+        ·
+          simp [assert_and]
           rw [Hexp]
           simp 
       · 
         exact Heval 
       · 
-        rfl 
+        rfl
 
-    
+theorem Consequence_rule (P P' Q Q' : Assertion) s
+  : {* P' *} (s) {* Q' *} → 
+    (∀ st, P st → P' st) → 
+    (∀ st, Q' st → Q st) → 
+    {* P *} (s) {* Q *} := by 
+    intros H H1 H2 env env' Hp Henv 
+    specialize H1 env Hp
+    specialize H env env' H1 Henv
+    apply H2 
+    exact H 
+
+ 

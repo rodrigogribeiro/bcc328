@@ -43,7 +43,9 @@ library
         Imp.Backend.SVM.ExpCodegen
         Imp.Backend.SVM.StatementCodegen
         Imp.Frontend.Lexer.Lexer
-        Imp.Frontend.Parser.Parser
+        Imp.Frontend.Parser.PEG.Parser
+        Imp.Frontend.Parser.LALR.Parser
+        Imp.Frontend.Parser.Recursive.Parser
         Imp.Frontend.Semantics.Basics
         Imp.Frontend.Semantics.ExpTypeChecker
         Imp.Frontend.Semantics.StatementTypeChecker

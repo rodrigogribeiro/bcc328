@@ -6,3 +6,4 @@ import «Imp».Syntax
 import «Imp».Semantics
 import «Imp».Interpreter
 import «Imp».Hoare
+import «Imp».Sequences

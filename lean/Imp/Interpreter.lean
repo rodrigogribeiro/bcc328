@@ -20,7 +20,7 @@ def emptyEnv : Env := λ _ => 0
 
 def updateEnv : String → Value → Env → Env
 | s, v, env => λ s' =>
-  if Substring.beq s.toSubstring s'.toSubstring
+  if s = s' 
   then v
   else env s
 

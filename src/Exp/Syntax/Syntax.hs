@@ -29,5 +29,5 @@ pprintFactor (EInt n)
   = show n
 pprintFactor other 
   = unwords [ "("
-            , pprintFactor other 
+            , pprintExp other 
             , ")"]

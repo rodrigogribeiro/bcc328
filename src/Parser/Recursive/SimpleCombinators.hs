@@ -73,7 +73,15 @@ symbol c = sat (c ==)
 -- parsing a token
 
 token :: Eq s => [s] -> Parser s [s]
-token = mapM symbol 
+token = mapM symbol
+
+stringToken :: String -> Parser Char String 
+stringToken s 
+  = do 
+      whitespace 
+      r <- token s 
+      whitespace
+      pure r 
 
 -- parsing a single digit
 
@@ -137,13 +145,22 @@ identifier :: Parser Char String
 identifier =  list <$> sat isAlpha <*> greedy (sat isAlphaNum)
 
 parens :: Parser Char a -> Parser Char a
-parens p  =  pack (symbol '(') p (symbol ')')
+parens p  =  pack (stringToken "(") p (stringToken ")")
+
+braces :: Parser Char a -> Parser Char a 
+braces p = pack (stringToken "{") p (stringToken "}")
 
 commaList    :: Parser Char a -> Parser Char [a]
 commaList p  =  listOf p (symbol ',')
 
 spaces :: Parser Char String
 spaces = greedy (sat isSpace)
+
+whitespace :: Parser Char ()
+whitespace = () <$ spaces
+
+semi :: Parser Char ()
+semi = () <$ stringToken ";"
 
 -- Chain expression combinators
 

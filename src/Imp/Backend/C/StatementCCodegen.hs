@@ -45,7 +45,7 @@ blockCodegen d (Block stmts)
 
 stmtCodegen :: Level -> Stmt -> String 
 stmtCodegen d Skip 
-  = nest d "skip;"
+  = nest d ";"
 stmtCodegen d (Def ty v me)
   = nest d $ unwords [ tyCodegen ty
                      , varCodeGen v
