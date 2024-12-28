@@ -75,5 +75,6 @@ pList = [ ("pushi", PUSHI)
         , ("jmp", JMP)
         , ("jz", JZ)
         , ("jnz", JNZ)
+        , ("free", FREE)
         ] 
 

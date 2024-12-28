@@ -119,6 +119,7 @@ execInstr NOT = booleanNot
 execInstr LOAD = load
 execInstr STORE = store
 execInstr HALT = return ()
+execInstr (FREE addr) = free addr
 
 
 
@@ -305,6 +306,10 @@ readMemory addr
   = do
       v <- gets (Map.lookup addr . memory)
       return $ maybe (error "Undefined variable!") id v
+
+free :: Address -> VM ()
+free addr 
+  = modify (\ s -> s {memory = Map.delete addr (memory s)})
 
 pop :: VM Value
 pop = do

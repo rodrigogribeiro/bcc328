@@ -46,6 +46,7 @@ data Instr
   | BNOT          -- push ! top (bitwise)
   | NOT           -- push ! top (boolean)
   | HALT          -- stop the machine
+  | FREE Int      -- free the memory address specified 
   deriving (Eq, Show)
 
 pprintCode :: [Instr] -> String
