@@ -3,6 +3,7 @@ module Imp.Frontend.Parser.Recursive.Parser where
 {-
  - Recursive descendent parser 
  - This is an scannerless parser. 
+ - This does not deal with comments. 
  - -}
 
 import Parser.Recursive.SimpleCombinators
@@ -176,7 +177,13 @@ mulExpParser
 
 notExpParser :: Parser Char Exp
 notExpParser 
-  = (const ENot <$> (stringToken "!")) `option` id <*> factorParser 
+  = notTokenList <*> factorParser 
+
+notTokenList :: Parser Char (Exp -> Exp)
+notTokenList 
+  = foldr step id <$> greedy (stringToken "!")
+    where 
+      step _ ac = ENot . ac 
 
 factorParser :: Parser Char Exp
 factorParser 

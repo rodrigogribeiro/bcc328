@@ -1,14 +1,17 @@
 {
 module Imp.Frontend.Parser.LALR.Parser (impParser) where
 
-import Imp.Frontend.Lexer.Lexer
+import Imp.Frontend.Lexer.Lexer hiding (lexer)
 import Imp.Syntax.Syntax
 }
 
 
-%name parser
+%name parser Program
+%monad {Alex}{(>>=)}{return}
 %tokentype { Token }
-%error     {parseError}
+%error     { parseError }
+%lexer {lexer}{Token _ TEOF}
+
 
 
 %token
@@ -89,11 +92,14 @@ Exp : num                                          {EValue (EInt $1)}
     | '(' Exp ')'                                  { $2 }
 
 {
-parseError :: [Token] -> a
-parseError [] = error "Parse error!"
-parseError (t : _) = error $ "Parse error " ++ (show t)
+parseError (Token (line, col) lexeme)
+  = alexError $ "Parse error while processing lexeme: " ++ show lexeme
+                ++ "\n at line " ++ show line ++ ", column " ++ show col
 
+lexer :: (Token -> Alex a) -> Alex a
+lexer = (=<< alexMonadScan)
 
-impParser :: String -> Program
-impParser = parser . lexer
+impParser :: String -> Either String Program
+impParser content 
+  = runAlex content parser 
 }

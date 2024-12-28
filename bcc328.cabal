@@ -73,6 +73,8 @@ library
         Parser.LL.Predictive
         Parser.LL.MkLL1Table
         Parser.LR.LR0.MkLR0Table
+        Parser.PEG.Examples 
+        Parser.PEG.Grammar 
         Parser.PEG.ParsingExp
         Parser.Recursive.SimpleCombinators
         Parser.Recursive.SimpleExpr
